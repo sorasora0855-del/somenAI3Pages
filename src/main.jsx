@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+import { API_BASE_URL } from './config.js';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
+
+  const checkApi = async () => {
+    setStatus('接続中…');
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/health`, { credentials: 'include' });
+      if (!response.ok) throw new Error('API error');
+      setStatus('somenAI3 API 接続OK');
+    } catch {
+      setStatus('APIに接続できません');
+    }
+  };
 
   return (
     <div className="app-shell">
@@ -33,7 +44,7 @@ function App() {
             <button className="icon-button" onClick={() => setSidebarOpen(true)} aria-label="サイドバーを開く">☰</button>
           )}
           <div className="mobile-brand">somenAI</div>
-          <button className="profile-button" aria-label="アカウント">●</button>
+          <button className="profile-button" onClick={checkApi} aria-label="API接続確認">●</button>
         </header>
 
         <section className="chat-area">
@@ -41,6 +52,7 @@ function App() {
             <div className="logo-placeholder">somenAI</div>
             <h1>何をお手伝いしようか？</h1>
             <p>あなたのためのAIアシスタント</p>
+            {status && <div className="api-status">{status}</div>}
           </div>
         </section>
 
@@ -60,5 +72,4 @@ function App() {
   );
 }
 
-void API_BASE_URL;
 createRoot(document.getElementById('root')).render(<App />);
