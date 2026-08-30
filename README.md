@@ -2,8 +2,8 @@
 
 somenAI3 public frontend.
 
-- Public URL: `https://147258.asro.jp`
+- GitHub Pages: `https://sorasora0855-del.github.io/somenAI3Pages/`
+- API bridge: `https://147258.asro.jp`
 - API port on the somenAI3 server: `1971`
-- API base URL is configurable so the frontend does not hard-code a LAN address.
-
-The somenAI logo supplied for this project is used as the primary brand mark.
+- The frontend uses `147258.asro.jp` as its API endpoint by default.
+- GitHub Actions builds and deploys the Vite application to GitHub Pages.
